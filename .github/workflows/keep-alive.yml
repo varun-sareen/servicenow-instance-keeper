@@ -1,7 +1,7 @@
 # ============================================================
 # SNOW Instance Keeper - Daily GitHub Actions Workflow
 # ============================================================
-# This runs every day at 7:00 AM UTC (adjust to your timezone)
+# This runs every day at 13:00 CET (adjust to your timezone)
 # and keeps your ServiceNow developer instance alive.
 # ============================================================
 
@@ -10,11 +10,7 @@ name: Keep SNOW Instance Alive
 on:
   # ── Runs daily on a schedule ──────────────────────────────
   schedule:
-    - cron: "0 7 * * *" # Every day at 7:00 AM UTC
-    # Change the time by editing the cron:
-    #   "0 7 * * *"  = 7:00 AM UTC = 8:00 AM Berlin (CET) / 12:30 PM IST
-    #   "0 3 * * *"  = 3:00 AM UTC = 8:30 AM IST
-    #   "0 14 * * *" = 2:00 PM UTC = 7:30 PM IST
+    - cron: "0 12 * * *" # Every day at 12:00 UTC = 13:00 CET (Berlin winter) / 14:00 CEST (Berlin summer)
     #   Tip: Google "crontab guru" to build your own schedule
 
   # ── Also allows you to run it manually anytime ────────────
@@ -25,6 +21,8 @@ jobs:
   keep-alive:
     runs-on: ubuntu-latest
     timeout-minutes: 20 # Safety: kill if stuck for 20 mins
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     steps:
       # ── Step 1: Get the code ──────────────────────────────
@@ -35,7 +33,7 @@ jobs:
       - name: 📦 Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "24"
 
       # ── Step 3: Install dependencies ──────────────────────
       - name: 📚 Install npm packages
