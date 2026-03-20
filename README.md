@@ -1,5 +1,9 @@
 # ❄️ SNOW Instance Keeper
 
+![GitHub stars](https://img.shields.io/github/stars/varun-sareen/snow-instance-keeper?style=flat-square&color=38bdf8)
+![GitHub forks](https://img.shields.io/github/forks/varun-sareen/snow-instance-keeper?style=flat-square&color=2dd4bf)
+![GitHub license](https://img.shields.io/github/license/varun-sareen/snow-instance-keeper?style=flat-square)
+
 **Automatically keeps your ServiceNow Developer Instance alive so it never gets reclaimed.**
 
 ServiceNow reclaims inactive developer instances after **10 days of no activity**. This tool logs into your instance every day via GitHub Actions (completely free), visits key pages, and keeps it active — all without touching your laptop or phone.
