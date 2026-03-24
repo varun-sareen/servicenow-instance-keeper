@@ -55,7 +55,8 @@ jobs:
       # ── Step 6: Send email notification ───────────────────
       # Runs ALWAYS — whether the script succeeded or failed
       - name: 📧 Send Email Notification
-        if: always()
+        # if: always() # commenting as I assume it works every time and if not, failed actions email is anyway sent by github.
+        if: false
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: smtp.gmail.com
