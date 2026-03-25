@@ -138,7 +138,12 @@ async function keepInstanceAlive() {
       // Click login button
       await page.click('#sysverb_login, button[name="login"]');
       log("⏳ Submitting login...");
-      await page.waitForNavigation({ waitUntil: "networkidle", timeout: 30000 });
+      //await page.waitForNavigation({ waitUntil: "networkidle", timeout: 30000 });
+      const iframeElement = await page.waitForSelector('#gsft_main', { timeout: 30000 });
+      // Switch into the iframe
+      const iframe = await iframeElement.contentFrame();
+      // Now wait for .pdi-homepage inside the iframe
+      await iframe.waitForSelector('.pdi-homepage', { timeout: 30000 });
       await sleep(3000);
 
       // Verify login success
