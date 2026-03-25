@@ -4,45 +4,36 @@
 # This runs every day at 13:00 CET (adjust to your timezone)
 # and keeps your ServiceNow developer instance alive.
 # ============================================================
-
 name: Keep ServiceNow Instance Alive
-
 on:
   # ── Runs daily on a schedule ──────────────────────────────
-  # schedule:
-    # - cron: "0 12 * * *" # Every day at 12:00 UTC = 13:00 CET (Berlin winter) / 14:00 CEST (Berlin summer)
+  schedule:
+    - cron: "0 12 * * *" # Every day at 12:00 UTC = 13:00 CET (Berlin winter) / 14:00 CEST (Berlin summer)
     #   Tip: Google "crontab guru" to build your own schedule
-
   # ── Also allows you to run it manually anytime ────────────
   workflow_dispatch:
     # This adds a "Run workflow" button in the GitHub Actions tab
-
 jobs:
   keep-alive:
     runs-on: ubuntu-latest
     timeout-minutes: 20 # Safety: kill if stuck for 20 mins
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
     steps:
       # ── Step 1: Get the code ──────────────────────────────
       - name: 📥 Checkout repository
         uses: actions/checkout@v4
-
       # ── Step 2: Set up Node.js ────────────────────────────
       - name: 📦 Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "24"
-
       # ── Step 3: Install dependencies ──────────────────────
       - name: 📚 Install npm packages
         run: npm install
-
       # ── Step 4: Install Playwright browser ────────────────
       - name: 🌐 Install Playwright Chromium
         run: npx playwright install chromium --with-deps
-
       # ── Step 5: Run the keep-alive script ─────────────────
       - name: 🚀 Run Instance Keeper
         id: keeper
@@ -51,28 +42,25 @@ jobs:
           SERVICENOW_USERNAME: ${{ secrets.SERVICENOW_USERNAME }}
           SERVICENOW_PASSWORD: ${{ secrets.SERVICENOW_PASSWORD }}
         run: npm run keep-alive
-
-      # ── Step 6: Send email notification ───────────────────
-      # Runs ALWAYS — whether the script succeeded or failed
-      - name: 📧 Send Email Notification
-        # if: always() # commenting as I assume it works every time and if not, failed actions email is anyway sent by github.
-        if: false
-        uses: dawidd6/action-send-mail@v3
-        with:
-          server_address: smtp.gmail.com
-          server_port: 587
-          username: ${{ secrets.EMAIL_USERNAME }}
-          password: ${{ secrets.EMAIL_APP_PASSWORD }}
-          subject: "ServiceNow Keeper: ${{ steps.keeper.outcome == 'success' && '✅ Instance is alive!' || '❌ Something went wrong' }}"
-          to: ${{ secrets.EMAIL_TO }}
-          from: ServiceNow Instance Keeper
-          body: |
-            Hi! Here's your daily ServiceNow Instance Keeper report.
-
-            Status: ${{ steps.keeper.outcome == 'success' && '✅ SUCCESS' || '❌ FAILED' }}
-            Instance: ${{ secrets.SERVICENOW_INSTANCE_URL }}
-            Time: ${{ github.event.repository.updated_at }}
-            
-            ${{ steps.keeper.outcome == 'success' && 'Your instance has been accessed and is safe from reclaim.' || 'Something went wrong. Please check the logs at:' }}
-            
-            Logs: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+      # ── Step 6: Job Summary ────────────────────────────────
+      # Runs ALWAYS — no credentials needed, uses built-in GitHub token
+      - name: 📋 Write Job Summary
+        if: always()
+        run: |
+          if [ "${{ steps.keeper.outcome }}" == "success" ]; then
+            echo "## ✅ ServiceNow Instance Keeper: SUCCESS" >> $GITHUB_STEP_SUMMARY
+            echo "| | |" >> $GITHUB_STEP_SUMMARY
+            echo "|---|---|" >> $GITHUB_STEP_SUMMARY
+            echo "| **Status** | ✅ Instance is alive and safe from reclaim |" >> $GITHUB_STEP_SUMMARY
+            echo "| **Instance** | ${{ secrets.SERVICENOW_INSTANCE_URL }} |" >> $GITHUB_STEP_SUMMARY
+            echo "| **Time** | $(date -u '+%Y-%m-%d %H:%M:%S UTC') |" >> $GITHUB_STEP_SUMMARY
+            echo "| **Run** | [View logs](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) |" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "## ❌ ServiceNow Instance Keeper: FAILED" >> $GITHUB_STEP_SUMMARY
+            echo "| | |" >> $GITHUB_STEP_SUMMARY
+            echo "|---|---|" >> $GITHUB_STEP_SUMMARY
+            echo "| **Status** | ❌ Something went wrong |" >> $GITHUB_STEP_SUMMARY
+            echo "| **Instance** | ${{ secrets.SERVICENOW_INSTANCE_URL }} |" >> $GITHUB_STEP_SUMMARY
+            echo "| **Time** | $(date -u '+%Y-%m-%d %H:%M:%S UTC') |" >> $GITHUB_STEP_SUMMARY
+            echo "| **Run** | [View logs](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) |" >> $GITHUB_STEP_SUMMARY
+          fi
