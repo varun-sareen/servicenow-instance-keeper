@@ -99,6 +99,11 @@
       "timestamp": "2026-03-26T00:00:00Z",
       "count": 0,
       "uniques": 0
+    },
+    {
+      "timestamp": "2026-03-27T00:00:00Z",
+      "count": 9,
+      "uniques": 4
     }
   ],
   "clones": [
@@ -201,11 +206,16 @@
       "timestamp": "2026-03-26T00:00:00Z",
       "count": 8,
       "uniques": 6
+    },
+    {
+      "timestamp": "2026-03-27T00:00:00Z",
+      "count": 12,
+      "uniques": 9
     }
   ],
-  "lastUpdated": "2026-03-27T23:34:05.205Z",
-  "totalViews": 199,
-  "totalUniqueVisitors": 71,
-  "totalClones": 70,
-  "totalUniqueCloners": 53
+  "lastUpdated": "2026-03-28T23:32:30.817Z",
+  "totalViews": 208,
+  "totalUniqueVisitors": 75,
+  "totalClones": 82,
+  "totalUniqueCloners": 62
 }
