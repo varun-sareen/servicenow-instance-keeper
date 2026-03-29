@@ -104,6 +104,11 @@
       "timestamp": "2026-03-27T00:00:00Z",
       "count": 9,
       "uniques": 4
+    },
+    {
+      "timestamp": "2026-03-28T00:00:00Z",
+      "count": 0,
+      "uniques": 0
     }
   ],
   "clones": [
@@ -211,11 +216,16 @@
       "timestamp": "2026-03-27T00:00:00Z",
       "count": 12,
       "uniques": 9
+    },
+    {
+      "timestamp": "2026-03-28T00:00:00Z",
+      "count": 17,
+      "uniques": 13
     }
   ],
-  "lastUpdated": "2026-03-28T23:32:30.817Z",
+  "lastUpdated": "2026-03-29T23:34:25.574Z",
   "totalViews": 208,
   "totalUniqueVisitors": 75,
-  "totalClones": 82,
-  "totalUniqueCloners": 62
+  "totalClones": 99,
+  "totalUniqueCloners": 75
 }
