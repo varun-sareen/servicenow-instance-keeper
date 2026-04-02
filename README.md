@@ -1,8 +1,13 @@
 # ❄️ ServiceNow Instance Keeper
 
+![Build Status](https://img.shields.io/github/actions/workflow/status/varun-sareen/servicenow-instance-keeper/keep-alive.yml?style=flat-square&label=keep-alive&logo=githubactions&logoColor=white)
+![Downloads](https://img.shields.io/github/downloads/varun-sareen/servicenow-instance-keeper/total?style=flat-square&color=brightgreen)
 ![GitHub stars](https://img.shields.io/github/stars/varun-sareen/servicenow-instance-keeper?style=flat-square&color=38bdf8)
 ![GitHub forks](https://img.shields.io/github/forks/varun-sareen/servicenow-instance-keeper?style=flat-square&color=2dd4bf)
 ![GitHub license](https://img.shields.io/github/license/varun-sareen/servicenow-instance-keeper?style=flat-square)
+![Last Commit](https://img.shields.io/github/last-commit/varun-sareen/servicenow-instance-keeper?style=flat-square&color=blue)
+![Node](https://img.shields.io/badge/node-24-339933?style=flat-square&logo=node.js&logoColor=white)
+![Platform](https://img.shields.io/badge/platform-GitHub%20Actions-2088FF?style=flat-square&logo=githubactions&logoColor=white)
 
 **Automatically keeps your ServiceNow Developer Instance alive so it never gets reclaimed.**
 
