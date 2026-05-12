@@ -1,6 +1,6 @@
 {
   "name": "servicenow-instance-keeper",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Keeps your ServiceNow Developer Instance alive by automating daily login and navigation",
   "scripts": {
     "keep-alive": "node scripts/keep-alive.js",

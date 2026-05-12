@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+---
+
+## [1.1.0] - 2026-05-12
+
 ### Changed
 - **Portal sign-in flow rewritten** based on confirmed live investigation findings:
   - Sign In button is inside a Shadow DOM (`<sn-cx-navigation>`); now located with

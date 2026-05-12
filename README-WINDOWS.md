@@ -1,5 +1,26 @@
 # 🪟 ServiceNow Instance Keeper — Windows Setup Guide
 
+> [!IMPORTANT]
+> **v1.1.0 — Action required if you forked this repo before May 2026**
+>
+> ServiceNow no longer surfaces a wake-up button on hibernating instance URLs.
+> The old wake-up logic in v1.0.0 fails silently and your workflow will keep
+> emailing failure reports.
+>
+> **To fix your fork:**
+> 1. Sync your fork with this repo's `main` branch (use the **"Sync fork"**
+>    button on GitHub, or run `git pull upstream main`).
+> 2. Add two new GitHub Secrets to your fork (Settings → Secrets and variables → Actions):
+>    - `SERVICENOW_DEV_EMAIL` — your developer.servicenow.com email
+>    - `SERVICENOW_DEV_PASSWORD` — your developer.servicenow.com password
+>
+>    These are your **developer portal** credentials, not your PDI admin
+>    credentials. They are different accounts.
+> 3. Trigger the workflow manually from the Actions tab to verify the fallback works.
+>
+> See [the v1.1.0 release notes](../../releases/tag/v1.1.0) and
+> [the pinned migration issue](../../issues) for details.
+
 This guide will walk you through setting up the ServiceNow Instance Keeper on your Windows PC. Every step is explained in detail — no prior experience needed.
 
 ---
