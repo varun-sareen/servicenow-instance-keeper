@@ -3,6 +3,16 @@
 ## [Unreleased]
 
 ### Changed
+- **Portal sign-in flow rewritten** based on confirmed live investigation findings:
+  - Sign In button is inside a Shadow DOM (`<sn-cx-navigation>`); now located with
+    `page.getByRole('button', { name: 'Sign In', exact: true })` which pierces shadow
+    roots automatically instead of unreliable CSS selector fallbacks.
+  - TrustArc cookie banner is dismissed before any interaction (two clicks:
+    "Required Only" then "Close"), both best-effort so the run continues if
+    the banner is absent.
+  - Auth flow is identifier-first (two pages): email submitted via `#username` /
+    `#identify-submit`, then password field awaited and filled on the resulting page
+    before a final submit. Previous implementation assumed a single-page form.
 - GitHub Actions workflow now caches Playwright browser binaries
   (`~/.cache/ms-playwright`) keyed by OS and Playwright version, and uses
   `actions/cache@v4` on the `actions/setup-node@v4` step for npm packages.
