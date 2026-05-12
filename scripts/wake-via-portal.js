@@ -74,7 +74,7 @@ async function wakeViaDevPortal({ browser, instanceUrl, log }) {
     const portalPage = await portalContext.newPage();
 
     log(`[portal] Navigating to ${PORTAL_URL}...`);
-    await portalPage.goto(PORTAL_URL, { waitUntil: 'networkidle', timeout: 60_000 });
+    await portalPage.goto(PORTAL_URL, { waitUntil: 'domcontentloaded', timeout: 30_000 });
     log(`[portal] Landed at: ${portalPage.url()}`);
 
     // Click sign-in entry point
@@ -96,7 +96,7 @@ async function wakeViaDevPortal({ browser, instanceUrl, log }) {
       );
     }
 
-    await portalPage.waitForLoadState('networkidle', { timeout: 30_000 });
+    await portalPage.waitForLoadState('domcontentloaded', { timeout: 30_000 });
     log(`[portal] Post-click URL: ${portalPage.url()}`);
 
     // Fill email
@@ -188,7 +188,7 @@ async function wakeViaDevPortal({ browser, instanceUrl, log }) {
       let pollPage;
       try {
         pollPage = await pollContext.newPage();
-        await pollPage.goto(`${baseUrl}/login.do`, { waitUntil: 'networkidle', timeout: 30_000 });
+        await pollPage.goto(`${baseUrl}/login.do`, { waitUntil: 'domcontentloaded', timeout: 30_000 });
         const loginForm = await pollPage.$('#user_name, input[name="user_name"]');
         if (loginForm) {
           log(`[portal] Login form is visible after ${elapsedSec}s — instance is awake!`);

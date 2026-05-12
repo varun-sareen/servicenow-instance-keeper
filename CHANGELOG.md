@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+### Fixed
+- Portal navigation now uses `waitUntil: 'domcontentloaded'` instead of `'networkidle'`.
+  The developer portal has continuous background network activity that prevented
+  `networkidle` from ever firing, causing a consistent 60 s timeout on the first live run.
+  The selector-based readiness checks that follow the `goto` calls are the real signal.
+
 ### Added
 - **Developer portal fallback wake-up** (`scripts/wake-via-portal.js`): when a hibernating
   instance no longer renders a wake-up button, the keeper now logs into
