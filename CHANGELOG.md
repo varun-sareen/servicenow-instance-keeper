@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+### Changed
+- GitHub Actions workflow now caches Playwright browser binaries
+  (`~/.cache/ms-playwright`) keyed by OS and Playwright version, and uses
+  `actions/cache@v4` on the `actions/setup-node@v4` step for npm packages.
+  On cache hits only OS-level apt dependencies are reinstalled
+  (`install-deps chromium`), skipping the browser binary download and saving
+  ~1.5–2 minutes of setup time per run.
+
 ### Fixed
 - Portal navigation now uses `waitUntil: 'domcontentloaded'` instead of `'networkidle'`.
   The developer portal has continuous background network activity that prevented

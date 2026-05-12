@@ -34,16 +34,37 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "24"
+          cache: 'npm'
 
       # ── Step 3: Install dependencies ──────────────────────
       - name: 📚 Install npm packages
         run: npm install
 
-      # ── Step 4: Install Playwright browser ────────────────
-      - name: 🌐 Install Playwright Chromium
+      # ── Step 4: Resolve Playwright version for cache key ──
+      - name: Get Playwright version
+        id: playwright-version
+        run: |
+          VERSION=$(node -e "console.log(require('playwright/package.json').version)")
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      # ── Step 5: Cache Playwright browser binaries ─────────
+      - name: Cache Playwright browsers
+        id: playwright-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ steps.playwright-version.outputs.version }}
+
+      # ── Step 6: Install Playwright browser ────────────────
+      - name: 🌐 Install Playwright Chromium (cache miss)
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: npx playwright install chromium --with-deps
 
-      # ── Step 5: Run the keep-alive script ─────────────────
+      - name: 🌐 Install Playwright OS dependencies (cache hit)
+        if: steps.playwright-cache.outputs.cache-hit == 'true'
+        run: npx playwright install-deps chromium
+
+      # ── Step 7: Run the keep-alive script ─────────────────
       - name: 🚀 Run Instance Keeper
         id: keeper
         env:
@@ -54,7 +75,7 @@ jobs:
           SERVICENOW_DEV_PASSWORD: ${{ secrets.SERVICENOW_DEV_PASSWORD }}
         run: npm run keep-alive
 
-      # ── Step 6: Send email notification ───────────────────
+      # ── Step 8: Send email notification ───────────────────
       # Runs ALWAYS — whether the script succeeded or failed
       - name: 📧 Send Email Notification
         if: always()
