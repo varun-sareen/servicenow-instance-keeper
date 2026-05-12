@@ -137,13 +137,15 @@ This is where you securely store your login info and email settings. GitHub encr
 3. In the left sidebar, click **Secrets and variables** → **Actions**
 4. Click **New repository secret** and add these **one at a time**:
 
-**ServiceNow credentials (3 secrets):**
+**ServiceNow credentials (5 secrets):**
 
 | Name | Value | Example |
 |------|-------|---------|
 | `SERVICENOW_INSTANCE_URL` | Your full instance URL | `https://dev12345.service-now.com` |
 | `SERVICENOW_USERNAME` | Your instance username | `admin` |
 | `SERVICENOW_PASSWORD` | Your instance password | `your-password-here` |
+| `SERVICENOW_DEV_EMAIL` | Your developer.servicenow.com login email (different from your PDI admin account) | `you@example.com` |
+| `SERVICENOW_DEV_PASSWORD` | Your developer.servicenow.com login password (different from your PDI admin account) | `your-portal-password` |
 
 **Email notification settings (3 secrets):**
 
@@ -153,7 +155,7 @@ This is where you securely store your login info and email settings. GitHub encr
 | `EMAIL_APP_PASSWORD` | The 16-char password from Step 4 | `abcdefghijklmnop` |
 | `EMAIL_TO` | Where to receive notifications | `yourname@gmail.com` |
 
-> You should have **6 secrets total** when done.
+> You should have **8 secrets total** when done.
 
 > ⚠️ **Important**: For `EMAIL_APP_PASSWORD`, paste the 16-character code **without any spaces**. So `abcd efgh ijkl mnop` becomes `abcdefghijklmnop`.
 

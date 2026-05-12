@@ -50,6 +50,8 @@ jobs:
           SERVICENOW_INSTANCE_URL: ${{ secrets.SERVICENOW_INSTANCE_URL }}
           SERVICENOW_USERNAME: ${{ secrets.SERVICENOW_USERNAME }}
           SERVICENOW_PASSWORD: ${{ secrets.SERVICENOW_PASSWORD }}
+          SERVICENOW_DEV_EMAIL: ${{ secrets.SERVICENOW_DEV_EMAIL }}
+          SERVICENOW_DEV_PASSWORD: ${{ secrets.SERVICENOW_DEV_PASSWORD }}
         run: npm run keep-alive
 
       # ── Step 6: Send email notification ───────────────────

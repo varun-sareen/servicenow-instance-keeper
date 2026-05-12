@@ -7,6 +7,7 @@
 // =============================================================
 
 const { chromium } = require("playwright");
+const { wakeViaDevPortal } = require("./wake-via-portal");
 
 // ── Configuration (pulled from environment variables) ─────────
 const config = {
@@ -110,8 +111,9 @@ async function keepInstanceAlive() {
           }
         }
       } else {
-        log("⚠️  Could not find wake-up button. Instance may need manual intervention.");
-        log("   Going to try logging in anyway...");
+        log("⚠️  Could not find wake-up button. Attempting developer portal fallback wake-up...");
+        await wakeViaDevPortal({ browser, instanceUrl: baseUrl, log });
+        log("✅ Developer portal wake-up succeeded! Proceeding to login...");
       }
     } else {
       log("✅ Instance appears to be running!");
