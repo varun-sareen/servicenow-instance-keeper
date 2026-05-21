@@ -4,6 +4,13 @@
 
 ---
 
+## [1.1.1] - 2026-05-21
+
+### Fixed
+- `keep-alive.js` no longer uses `waitUntil:'networkidle'` for post-login navigation or the homepage activity step. The previous behavior caused false-failure reports on runs that had actually succeeded at registering instance activity. Affected 3 of 4 daily runs between May 16–21.
+
+---
+
 ## [1.1.0] - 2026-05-12
 
 ### Changed

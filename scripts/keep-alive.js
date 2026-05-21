@@ -58,7 +58,7 @@ async function keepInstanceAlive() {
   try {
     // ── STEP 1: Navigate to instance ──────────────────────
     log("🌐 Step 1: Opening instance URL...");
-    await page.goto(baseUrl, { waitUntil: "networkidle", timeout: 60000 });
+    await page.goto(baseUrl, { waitUntil: "domcontentloaded", timeout: 60000 }); // networkidle never settles on ServiceNow instances (continuous background traffic); domcontentloaded is the reliable signal.
     await sleep(3000);
 
     // ── STEP 2: Check if instance is hibernating ──────────
@@ -90,7 +90,7 @@ async function keepInstanceAlive() {
 
           try {
             await page.goto(`${baseUrl}/login.do`, {
-              waitUntil: "networkidle",
+              waitUntil: "domcontentloaded", // networkidle never settles on ServiceNow instances (continuous background traffic); domcontentloaded is the reliable signal.
               timeout: 30000,
             });
             const newContent = await page.content();
@@ -122,7 +122,7 @@ async function keepInstanceAlive() {
     // ── STEP 3: Login to the instance ─────────────────────
     log("🔐 Step 2: Logging in...");
     await page.goto(`${baseUrl}/login.do`, {
-      waitUntil: "networkidle",
+      waitUntil: "domcontentloaded", // networkidle never settles on ServiceNow instances (continuous background traffic); domcontentloaded is the reliable signal.
       timeout: 60000,
     });
     await sleep(2000);
@@ -140,7 +140,7 @@ async function keepInstanceAlive() {
       // Click login button
       await page.click('#sysverb_login, button[name="login"]');
       log("⏳ Submitting login...");
-      await page.waitForNavigation({ waitUntil: "networkidle", timeout: 30000 });
+      await page.waitForNavigation({ waitUntil: "domcontentloaded", timeout: 30000 }); // networkidle never settles on ServiceNow instances (continuous background traffic); domcontentloaded is the reliable signal.
       await sleep(3000);
 
       // Verify login success
@@ -154,7 +154,7 @@ async function keepInstanceAlive() {
     // ── STEP 4: Visit Update Sets page ────────────────────
     log("📋 Step 3: Opening Update Sets...");
     await page.goto(`${baseUrl}/sys_update_set_list.do`, {
-      waitUntil: "networkidle",
+      waitUntil: "domcontentloaded", // networkidle never settles on ServiceNow instances (continuous background traffic); domcontentloaded is the reliable signal.
       timeout: 30000,
     });
     await sleep(3000);
@@ -174,7 +174,7 @@ async function keepInstanceAlive() {
     // ── STEP 5: Quick visit to homepage to register activity
     log("🏠 Step 4: Visiting homepage to register extra activity...");
     await page.goto(`${baseUrl}/nav_to.do?uri=home.do`, {
-      waitUntil: "networkidle",
+      waitUntil: "domcontentloaded", // networkidle never settles on ServiceNow instances (continuous background traffic); domcontentloaded is the reliable signal.
       timeout: 30000,
     });
     await sleep(2000);
